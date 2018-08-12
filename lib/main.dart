@@ -111,12 +111,18 @@ class TopStories extends StatelessWidget {
   }
 
   Widget _buildList() {
-    return new RefreshIndicator(
-      onRefresh: () {
-        vm.refresh();
-        return Future.value(null);
-      },
-      child: StoryList(stories: vm.stories),
+    return new CustomScrollView(
+      slivers: <Widget>[
+        CupertinoSliverRefreshControl(
+          onRefresh: () {
+            vm.refresh();
+            return Future.value(null);
+          },
+        ),
+        StoryList(
+          stories: vm.stories,
+        )
+      ],
     );
   }
 }

@@ -11,13 +11,14 @@ class StoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      physics: AlwaysScrollableScrollPhysics(),
-      children: ListTile.divideTiles(
-        context: context,
-        tiles: stories.map((story) => _buildRow(story)),
-      ).toList(),
-    );
+    var listTiles = ListTile.divideTiles(
+      context: context,
+      tiles: stories.map((story) => _buildRow(story)),
+    ).toList();
+    return SliverList(
+        delegate: new SliverChildBuilderDelegate((context, index) {
+      return listTiles[index];
+    }, childCount: stories.length));
   }
 
   Widget _buildRow(Story story) {
