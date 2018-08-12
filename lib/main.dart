@@ -44,8 +44,9 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           home: ConnectedTopStories(),
           theme: ThemeData(
-              primaryColor: CupertinoColors.activeBlue,
-              platform: TargetPlatform.iOS),
+            primaryColor: CupertinoColors.activeBlue,
+          ),
+          debugShowCheckedModeBanner: false,
         ));
   }
 }
