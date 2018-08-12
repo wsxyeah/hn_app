@@ -9,7 +9,6 @@ class ApiRequestMiddleWare<S> implements MiddlewareClass<S> {
   void call(Store<S> store, action, NextDispatcher next) async {
     if (action is FetchStoriesAction) {
       if (action.forRequest) {
-        print("[action] request ");
         next(action);
         Iterable<int> ids = (await HnApi().topStoryIds()).take(10);
         List<Story> items = await Future.wait(ids.map((id) => HnApi().item(id)));
@@ -17,7 +16,7 @@ class ApiRequestMiddleWare<S> implements MiddlewareClass<S> {
         store.dispatch(FetchStoriesAction(false, items, null));
         return;
       }
-      next(action);
     }
+    next(action);
   }
 }
