@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:hn_app/data/entities.dart';
 
 class StoryList extends StatelessWidget {
@@ -21,16 +22,17 @@ class StoryList extends StatelessWidget {
   }
 
   Widget _buildRow(Story story) {
-    return StoreConnector<AppState, void Function(Object)>(
-      builder: (context, toggleFavorite) {
-        return ListTile(
-            title: Text(story.title),
-            subtitle: Text(story.by),
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-            onTap: () => toggleFavorite(null));
-      },
-      converter: (store) => (Object wordPair) => store.dispatch(null),
-    );
+    return ListTile(
+        title: Text(story.title),
+        subtitle: Text(story.by),
+        contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        onTap: () async {
+          var url = story.url;
+          if (await canLaunch(url)) {
+            await launch(url);
+          } else {
+            print('Could not launch $url');
+          }
+        });
   }
 }
