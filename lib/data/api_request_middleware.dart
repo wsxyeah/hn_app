@@ -12,16 +12,21 @@ class ApiRequestMiddleWare<S> implements MiddlewareClass<S> {
     if (action is FetchStoriesAction) {
       if (action.forRequest) {
         next(action);
-        Iterable<int> ids = (await HnApi().topStoryIds()).take(10);
-        List<Story> items = await Future.wait(ids.map((id) =>
-            _storyCache.containsKey(id)
-                ? Future.value(_storyCache[id])
-                : HnApi().item(id)));
-        print("[items]: $items");
-        store.dispatch(FetchStoriesAction(forRequest: false, response: items));
+        try {
+          Iterable<int> ids = (await HnApi().topStoryIds()).take(10);
+          List<Story> items = await Future.wait(ids.map((id) =>
+              _storyCache.containsKey(id)
+                  ? Future.value(_storyCache[id])
+                  : HnApi().item(id)));
+          print("[items]: $items");
+          store
+              .dispatch(FetchStoriesAction(forRequest: false, response: items));
 
-        items.forEach((s) => _storyCache[s.id] = s);
-        print("[cache]: $_storyCache");
+          items.forEach((s) => _storyCache[s.id] = s);
+          print("[cache]: $_storyCache");
+        } catch (e) {
+          store.dispatch(FetchStoriesAction(forRequest: false, exception: e));
+        }
         return;
       }
     }
