@@ -13,7 +13,7 @@ void main() {
   var store = configureStore();
   runApp(MyApp(store: store));
 
-  store.dispatch(FetchStoriesAction(true, null, null));
+  store.dispatch(FetchStoriesAction());
 }
 
 class FakeApp extends StatelessWidget {
@@ -67,7 +67,7 @@ class ConnectedTopStories extends StatelessWidget {
       converter: (store) => TopStoriesViewModel(
           store.state.itemIds.map((id) => store.state.items[id]).toList(),
           store.state.isLoading,
-          () => store.dispatch(FetchStoriesAction(true, null, null))),
+          () => store.dispatch(FetchStoriesAction())),
     );
   }
 }

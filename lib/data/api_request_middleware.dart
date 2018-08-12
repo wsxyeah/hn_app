@@ -18,7 +18,7 @@ class ApiRequestMiddleWare<S> implements MiddlewareClass<S> {
                 ? Future.value(_storyCache[id])
                 : HnApi().item(id)));
         print("[items]: $items");
-        store.dispatch(FetchStoriesAction(false, items, null));
+        store.dispatch(FetchStoriesAction(forRequest: false, response: items));
 
         items.forEach((s) => _storyCache[s.id] = s);
         print("[cache]: $_storyCache");
