@@ -5,7 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hn_app/data/entities.dart';
 
 class StoryList extends StatelessWidget {
-  final List<Object> stories;
+  final List<Story> stories;
 
   const StoryList({Key key, this.stories}) : super(key: key);
 
