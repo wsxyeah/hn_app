@@ -16,14 +16,21 @@ class StoryList extends StatelessWidget {
       physics: AlwaysScrollableScrollPhysics(),
       children: ListTile.divideTiles(
         context: context,
-        tiles: stories.map((story) => _buildRow(story)),
+        tiles: stories.map((story) => StoryRow(story: story)),
       ).toList(),
     );
   }
+}
 
-  Widget _buildRow(Story story) {
+class StoryRow extends StatelessWidget {
+  final Story story;
+
+  const StoryRow({Key key, this.story}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
-        title: Text(story.title),
+        title: Text(story.title, softWrap: true),
         subtitle: Text(story.by),
         contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         onTap: () async {
