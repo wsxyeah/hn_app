@@ -6,4 +6,9 @@ class FetchStoriesAction {
   Exception exception;
 
   FetchStoriesAction({this.forRequest = true, this.response, this.exception});
+
+  @override
+  String toString() {
+    return 'FetchStoriesAction{forRequest: $forRequest, response: $response, exception: $exception}';
+  }
 }
